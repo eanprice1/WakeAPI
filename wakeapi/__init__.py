@@ -21,6 +21,8 @@ def create_app():
     register_exception_handler(app)
 
     from wakeapi.routes.wake import wake_bp
+    from wakeapi.routes.power_off import power_off_bp
     app.register_blueprint(wake_bp)
+    app.register_blueprint(power_off_bp)
 
     return app
