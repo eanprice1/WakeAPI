@@ -13,8 +13,7 @@ def power_off():
     if not data or "code" not in data:
         return jsonify({"error": "Missing TOTP code"}), 400
 
-    #TEMPORARY- THE CHECK FOR TOTP CODE 111111 SHOULD BE REMOVED AT END OF DEVELOPMENT
-    if not auth.is_valid_totp(data["code"]) and int(data["code"] != 111111):
+    if not auth.is_valid_totp(data["code"]):
         return jsonify({"error": "Invalid TOTP code"}), 403
 
     logger.info(f"[{get_remote_address()}] Valid TOTP — attempting to power off target device")
