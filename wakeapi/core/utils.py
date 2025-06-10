@@ -1,3 +1,4 @@
+import socket
 import subprocess
 from wakeonlan import send_magic_packet
 from wakeapi.core.logger import logger
@@ -31,4 +32,11 @@ def run_ssh_command(command: str, timeout: int = 10) -> bool:
             return False
     except Exception as e:
         logger.exception(f"Exception running SSH command to {ssh_target}")
+        return False
+    
+def is_port_open(port: int, timeout: int = 2) -> bool:
+    try:
+        with socket.create_connection((Config.SSH_HOST, port), timeout):
+            return True
+    except (socket.timeout, ConnectionRefusedError, OSError):
         return False
